@@ -1,0 +1,47 @@
+﻿@page "/practicalexamples"
+
+@using Blazorise;
+
+
+<h1>Praktiske oppgaver</h1>
+<h4>Her finner du endel funksjoner som kan hjelpe deg med ulike ting</h4>
+
+<Tabs SelectedTab="@selectedTab" SelectedTabChanged="@OnSelectedTabChanged">
+    <Items>
+        <Tab Name="addition">Summering</Tab>
+        <Tab Name="hours">Timer,minutt,sekund</Tab>
+        <Tab Name="area">Areal</Tab>
+        <Tab Name="text"></Tab>
+    </Items>
+    <Content>
+        <TabPanel Name="addition">
+            <BlazorDemo.Client.Components.Addition />
+        </TabPanel>
+        <TabPanel Name="hours">
+            <BlazorDemo.Client.Components.Hours />
+        </TabPanel>
+        <TabPanel Name="area">
+            <BlazorDemo.Client.Components.Area />
+        </TabPanel>
+        <TabPanel Name="text">
+            
+
+
+
+        </TabPanel>
+    </Content>
+</Tabs>
+
+
+
+@code {
+    string selectedTab = "addition";
+
+    private Task OnSelectedTabChanged( string name )
+    {
+        selectedTab = name;
+
+        return Task.CompletedTask;
+    }
+
+}

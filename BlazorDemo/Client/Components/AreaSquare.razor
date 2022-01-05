@@ -1,0 +1,16 @@
+﻿<h3>Areal av firkant</h3>
+<Label>Høyde / Bredde</Label>
+<NumericEdit @bind-Value="@heightSquare" />
+<NumericEdit @bind-Value="@widthSquare" />
+<Button Color="Color.Primary" onclick="@CalculateAreaSquare">Regn ut</Button>
+<br />
+<p>@areaSquare</p>
+
+@code {
+    private int heightSquare, widthSquare, areaSquare;
+
+    private void CalculateAreaSquare()
+    {
+        areaSquare = heightSquare * widthSquare;
+    }
+}

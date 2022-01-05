@@ -1,0 +1,131 @@
+﻿<h3>SortArray</h3>
+<TextEdit @bind-Text="@input" />
+<Button Color="Color.Primary" onclick="@SortAsc">Sorter</Button>
+<Button Color="Color.Dark" onclick="@SortQuick">QuickSort</Button>
+<Button Color="Color.Dark" onclick="@SharpSort">SharpSort</Button>
+
+@if (output != null)
+{
+    @foreach (var t in output)
+    {
+        <p>@t</p>
+    }
+}
+Sorteringen tok:
+@time
+
+@code {
+    private string input;
+    private List<string> output;
+    private string time;
+
+    private void SortAsc()
+    {
+        var start = DateTime.Now;
+
+        var array = input.Split(',');
+        string tmp;
+
+        for (int i = 0; i < array.Length - 1; i++)
+        {
+            for (int j = i + 1; j < array.Length; j++)
+            {
+                if (string.Compare(array[i], array[j]) > 0)
+                {
+                    tmp = array[i];
+                    array[i] = array[j];
+                    array[j] = tmp;
+                }
+            }
+        }
+        var stop = DateTime.Now;
+        var diff = stop - start;
+        time = diff.Ticks.ToString();
+
+        output = array.ToList();
+
+    }
+
+    private void SharpSort()
+    {
+        var start = DateTime.Now;
+        
+        var arr = input.Split(',');
+        
+        arr = arr.OrderBy(o => o).ToArray();
+
+        var stop = DateTime.Now;
+        var diff = stop - start;
+        time = diff.Ticks.ToString();
+
+        output = arr.ToList();
+    }
+
+    private void SortQuick()
+    {
+        var start = DateTime.Now;
+
+        var arr = input.Split(',');
+
+        Quick_Sort(arr, 0, arr.Length - 1);
+
+        var stop = DateTime.Now;
+        var diff = stop - start;
+        time = diff.Ticks.ToString();
+
+        output = arr.ToList();
+    }
+
+    private void Quick_Sort(string[] arr, int left, int right)
+    {
+        if (left < right)
+        {
+            int pivot = Partition(arr, left, right);
+
+            if (pivot >= 1)
+            {
+                Quick_Sort(arr, left, pivot - 1);
+            }
+            if (pivot + 1 < right)
+            {
+                Quick_Sort(arr, pivot + 1, right);
+            }
+        }
+
+    }
+
+    private int Partition(string[] arr, int left, int right)
+    {
+        string pivot = arr[left];
+        while (true)
+        {
+
+            while (string.Compare(arr[left], pivot) < 0)
+            {
+                left++;
+            }
+
+            while (string.Compare(arr[right], pivot) > 0)
+            {
+                right--;
+            }
+
+            if (left < right)
+            {
+                if (arr[left] == arr[right]) return right;
+
+                string temp = arr[left];
+                arr[left] = arr[right];
+                arr[right] = temp;
+            }
+            else
+            {
+                return right;
+            }
+        }
+    }
+
+
+
+
+}

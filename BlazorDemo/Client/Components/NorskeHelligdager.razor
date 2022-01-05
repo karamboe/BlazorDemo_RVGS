@@ -1,0 +1,113 @@
+﻿@using NoCommons.Date;
+
+<h3>NorskeHelligdager</h3>
+
+<Label>Angi årstall:</Label>
+<TextEdit @bind-Text="@inputYear" />
+<Button Color="Color.Primary" Clicked="@Calculate">Beregn helligdager</Button>
+
+@if (dager != null)
+{
+    foreach (var d in dager)
+    {
+        <p>@d.ToLongDateString()</p>
+    }
+}
+
+@code {
+
+    [Inject] IMessageService messageService { get; set; }
+
+    private string inputYear;
+    private List<DateTime> dager;
+
+    private void Calculate()
+    {
+        if (!string.IsNullOrWhiteSpace(inputYear))
+        {
+            int year = int.Parse(inputYear);
+
+            dager = NorwegianDateUtil.GetHolidays(year).ToList();
+
+
+            dager = new List<DateTime>();
+
+            dager.Add(new DateTime(year, 1, 1));
+            dager.Add(new DateTime(year, 5, 1));
+            dager.Add(new DateTime(year, 5, 17));
+            //1.Juledag
+            dager.Add(new DateTime(year, 12, 25));
+            //2.Juledag
+            dager.Add(new DateTime(year, 12, 26));
+            //DateTime pd = GetPaaske(inputYear);
+            var pd = EasterSunday(year);
+            //Skjertorsdag
+            dager.Add(pd.AddDays(-3));
+            //Langfredag
+            dager.Add(pd.AddDays(-2));
+            //1.Påskedag
+            dager.Add(pd);
+            //2.Påskedag
+            dager.Add(pd.AddDays(1));
+            //Kristi himmelfartsdag
+            dager.Add(pd.AddDays(39));
+            //1. Pinse dag
+            dager.Add(pd.AddDays(49));
+            //2. Pinse dag
+            dager.Add(pd.AddDays(50));
+
+            //sortering av datoer
+            dager = dager.OrderBy(s => s).ToList();
+
+        }
+        else
+        {
+            messageService.Warning("Du må angi et årstall for å få beregnet helligdager!");
+        }
+    }
+
+    private static DateTime GetEasterDay(int year)
+    {
+        int a = year % 19;
+        int b = year / 100;
+        int c = year % 100;
+        int d = b / 4;
+        int e = b % 4;
+        int f = (b + 8) / 25;
+        int g = (b - f + 1) / 3;
+        int h = ((19 * a) + b - d - g + 15) % 30;
+        int i = c / 4;
+        int k = c % 4;
+        int l = (32 + (2 * e) + (2 * i) - h - k) % 7;
+        int m = (a + (11 * h) + (22 * l)) / 451;
+        int n = (h + l - (7 * m) + 114) / 31; // This is the month number.
+        int p = (h + l - (7 * m) + 114) % 31; // This is the date minus one.
+
+        return new DateTime(year, n, p + 1);
+    }
+
+
+    private DateTime EasterSunday(int inputYear)
+    {
+
+        var a = inputYear % 19;
+        var b = Math.Floor((decimal)inputYear / 100);
+        var c = inputYear % 100;
+        var d = Math.Floor(b / 4);
+        var e = b % 4;
+        var f = Math.Floor((b + 8) / 25);
+        var g = Math.Floor((b - f + 1) / 3);
+        var h = (19 * a + b - d - g + 15) % 30;
+        var i = Math.Floor((decimal)c / 4);
+        var k = c % 4;
+        var l = (32 + 2 * e + 2 * i - h - k) % 7;
+        var m = Math.Floor((a + 11 * h + 22 * l) / 451);
+        var n = Math.Floor((h + l - 7 * m + 114) / 31);
+        var p = (h + l - 7 * m + 114) % 31;
+        p++;
+
+
+        var es = new DateTime(inputYear, (int)n, (int)p);
+        return es;
+    }
+}

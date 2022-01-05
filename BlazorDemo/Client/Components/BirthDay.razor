@@ -1,0 +1,27 @@
+﻿<h3>BirthDay</h3>
+<DatePicker TValue="DateTime" @bind-Date="date" DisplayFormat="dd.MM.yyyy" />
+<Button Color="Color.Warning" onclick="@Calculate">Beregn fødselsdag</Button>
+
+@if (output != null)
+{
+    foreach (var a in output)
+    {
+        <p>@a</p>
+    }
+}
+
+
+@code {
+    private DateTime date;
+    private List<string> output;
+
+    private void Calculate()
+    {
+        output = new List<string>();
+        output.Add($"Du ble født på en {date.DayOfWeek.ToString()}");
+        output.Add($"Du er {(DateTime.Now - date).TotalDays} dager");
+        output.Add($"Du er {(DateTime.Now - date).TotalHours} timer");
+        output.Add($"Du er {(DateTime.Now - date).TotalMinutes} minutter");
+        output.Add($"Du er {(DateTime.Now - date).TotalSeconds} sekunder");        
+    }
+}

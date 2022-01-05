@@ -1,0 +1,23 @@
+﻿<h3>Stringconcat</h3>
+<TextEdit @bind-Text="text1" />
+<TextEdit @bind-Text="text2" />
+
+<input type="text" @bind-value="text1" />
+<input type="text" @bind-value="text2" />
+
+<Button Color="Color.Primary" onclick="@ConcatStrings">Slå sammen tekst</Button>
+
+@textSum
+
+@code {
+    private string text1;
+    private string text2;
+    private string textSum;
+
+    private void ConcatStrings()
+    {
+        textSum = $"{text1} - {text2}";        
+        textSum = string.Concat(text1, text2);
+
+    }
+}

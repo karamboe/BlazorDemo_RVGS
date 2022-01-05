@@ -1,0 +1,81 @@
+﻿<h3>Calculator</h3>
+
+<NumericEdit @bind-Value="@input" />
+<Button Color="Color.Primary" onclick="@Add">+</Button>
+<Button Color="Color.Info" onclick="@Sub">-</Button>
+<Button Color="Color.Info" onclick="@Divide">/</Button>
+<Button Color="Color.Info" onclick="@Multiply">*</Button>
+<Button Color="Color.Info" onclick="@Summary">=</Button>
+<Button Color="Color.Warning" onclick="@Clear">C</Button>
+<br />
+<Label>@sum</Label>
+
+@code {
+    private double input;
+    private double sum;
+    private string operation = "+";
+
+    private void Add()
+    {
+        Calculate();
+        operation = "+";
+        input = 0;
+    }
+
+    private void Sub()
+    {
+        Calculate();
+        operation = "-";
+        input = 0;
+    }
+
+    private void Divide()
+    {
+        Calculate();
+        operation = "/";
+        input = 0;
+    }
+    private void Multiply()
+    {
+        Calculate();
+        operation = "*";
+        input = 0;
+    }
+    
+    private void Summary()
+    {
+        Calculate();
+        operation = "=";
+        input = 0;
+    }
+
+    private void Clear()
+    {
+        operation = "+";
+        sum = 0;
+        input = 0;
+    }
+
+    private void Calculate()
+    {
+        switch (operation)
+        {
+            case "+":
+                sum = sum + input;
+                break;
+            case "-":
+                sum = sum - input;
+                break;
+            case "/":
+                sum = sum / input;
+                break;
+            case "*":
+                sum = sum * input;
+                break;
+            default:                
+                break;
+        }
+    }
+
+
+}

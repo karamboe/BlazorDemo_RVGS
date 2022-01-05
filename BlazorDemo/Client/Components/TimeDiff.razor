@@ -1,0 +1,50 @@
+﻿<h3>TimeDiff</h3>
+
+@*<TimePicker TValue="TimeSpan?" @bind-Time="@time1" TimeAs24hr="true" />
+<TimePicker TValue="TimeSpan?" @bind-Time="@time2" TimeAs24hr="true" />
+
+<DatePicker TValue="DateTime?" @bind-Date="date1" DisplayFormat="dd.MM.yyyy HH:mm:ss" />
+<DatePicker TValue="DateTime?" @bind-Date="date2" DisplayFormat="dd.MM.yyyy HH:mm:ss" />
+*@
+<input type="date" @bind-value="date1" />
+<input type="date" @bind-value="date2" />
+
+
+<Button Color="Color.Primary" onclick="@Calculate">Beregn forskjell</Button>
+
+
+@if (output != null)
+{
+    @foreach (var t in output)
+    {
+        <p>@t</p>
+    }
+}
+
+
+@code {
+    private TimeSpan? time1;
+    private TimeSpan? time2;
+    private List<string> output;
+
+    private DateTime? date1;
+    private DateTime? date2;
+
+    private void Calculate()
+    {
+        var diff = time2 - time1;
+        output = new List<string>();
+        output.Add("Time forskjeller: ");
+        output.Add("Timer: " + diff?.TotalHours.ToString());
+        output.Add("Minutter: " + diff?.TotalMinutes.ToString());
+        output.Add("Sekunder: " + diff?.TotalSeconds.ToString());
+
+        var dateDiff = date2 - date1;
+        output.Add("DateTime forskjeller: ");
+        output.Add("Dager: " + dateDiff?.TotalDays.ToString());
+        output.Add("Timer: " + dateDiff?.TotalHours.ToString());
+        output.Add("Minutter: " + dateDiff?.TotalMinutes.ToString());
+        output.Add("Sekunder: " + dateDiff?.TotalSeconds.ToString());
+
+    }
+}

@@ -1,0 +1,23 @@
+﻿
+<b>Angi antall timer</b>
+<NumericEdit @bind-Value="@hours" />
+
+<Button Color="Color.Primary" onclick="@Calculate">Regn ut</Button>
+
+<Label>Minutt</Label>
+<NumericEdit @bind-Value="@minutes" ReadOnly="true" />
+
+<Label>Sekund</Label>
+<NumericEdit @bind-Value="@seconds" ReadOnly="true" />
+
+@code {
+    private decimal hours;
+    private decimal minutes;
+    private decimal seconds;
+
+    private void Calculate()
+    {
+        minutes = hours * 60;
+        seconds = minutes * 60;
+    }
+}

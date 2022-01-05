@@ -1,0 +1,13 @@
+*.dll
+*.sentinel
+\BlazorDemo\Client\bin\*
+\BlazorDemo\Client\obj\*
+\BlazorDemo\Server\bin\*
+\BlazorDemo\Server\obj\*
+/BlazorDemo/Client/bin/Debug/net6.0
+/BlazorDemo/Client/obj
+/BlazorDemo/Server/bin/Debug/net6.0
+/BlazorDemo/Server/obj
+/BlazorDemo/Shared/bin/Debug/net6.0
+/BlazorDemo/Shared/obj/Debug/net6.0
+/.vs/BlazorDemo

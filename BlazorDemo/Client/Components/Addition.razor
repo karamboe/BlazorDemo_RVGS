@@ -1,0 +1,27 @@
+﻿
+<Fields>
+    <Field ColumnSize="ColumnSize.Is2">
+        <NumericEdit @bind-Value="@num1" />
+    </Field>
+    <Field ColumnSize="ColumnSize.Is2">
+        <NumericEdit @bind-Value="@num2" /> 
+    </Field>
+    <Field ColumnSize="ColumnSize.IsAuto">
+        <Button Color="Color.Primary" onclick="@AddNumbers">=</Button>
+    </Field>
+    <Field ColumnSize="ColumnSize.Is2">
+        <NumericEdit Color="Color.Danger" @bind-Value="@sum" />
+    </Field>
+</Fields>
+
+@code {
+    int num1;
+    int num2;
+    int sum;
+
+    private void AddNumbers()
+    {
+        sum = num1 + num2;
+    }
+
+}

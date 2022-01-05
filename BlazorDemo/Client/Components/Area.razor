@@ -1,0 +1,72 @@
+﻿<Card>
+    <CardBody>
+        <h3>Areal av firkant</h3>
+        <Label>Høyde / Bredde</Label>
+        <NumericEdit @bind-Value="@heightSquare" />
+        <NumericEdit @bind-Value="@widthSquare" />
+        <Button Color="Color.Primary" onclick="@CalculateAreaSquare">Regn ut</Button>
+        <br />
+        <br />
+        <Label>Areal</Label>
+        <NumericEdit @bind-Value="@areaSquare" />
+        <br />
+    </CardBody>>
+</Card>>
+
+<Card>
+    <CardBody>
+        <h3>Areal av Sirkel</h3>
+        <Label>Radius</Label>
+        <NumericEdit @bind-Value="@radiusCircle" />
+        <Button Color="Color.Primary" onclick="@CalculateAreaCircle">Regn ut</Button>
+        <br />
+        <br />
+        <Label>Areal</Label>
+        <NumericEdit @bind-Value="@areaCircle" />
+        <br />
+    </CardBody>>
+</Card>>
+
+<Card>
+    <CardBody>
+        <h3>Areal av trekant</h3>
+        <Label>Høyde / Bredde</Label>
+        <NumericEdit @bind-Value="@heightTriangle" />
+        <NumericEdit @bind-Value="@widthTriangle" />
+        <Button Color="Color.Primary" onclick="@CalculateAreaTriangle">Regn ut</Button>
+        <br />
+        <br />
+        <Label>Areal</Label>
+        <NumericEdit @bind-Value="@areaTriangle" />
+    </CardBody>>
+</Card>>
+
+@code {
+    [Inject] INotificationService notificationService { get; set; }
+    [Inject] IMessageService messageService { get; set; }
+
+    private int heightSquare, widthSquare, areaSquare;
+
+    private void CalculateAreaSquare()
+    {
+        areaSquare = heightSquare * widthSquare;
+    }
+
+    private double radiusCircle, areaCircle;
+
+    private void CalculateAreaCircle()
+    {
+        //a = pi * r2
+        areaCircle = Math.PI * (radiusCircle * radiusCircle);
+    }
+
+    private int heightTriangle, widthTriangle, areaTriangle;
+
+    private void CalculateAreaTriangle()
+    {
+        //a = (b * h) / 2
+        areaTriangle = (heightTriangle * widthTriangle) / 2;
+        notificationService.Info("Areal av trekanten er " + areaTriangle);
+        messageService.Info("Areal av trekanten er " + areaTriangle);
+    }
+}
